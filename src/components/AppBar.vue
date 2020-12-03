@@ -39,7 +39,6 @@
             <v-list-item-title>{{ menu.label }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
-        <v-list-iitem-group> </v-list-iitem-group>
       </v-list>
 
       <v-divider></v-divider>
