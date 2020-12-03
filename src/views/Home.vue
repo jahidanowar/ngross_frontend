@@ -157,7 +157,8 @@
     <!-- ./Category Container -->
     <v-container>
       <h2 class="mb-2">Recent Products</h2>
-      <v-row dense>
+      
+      <v-row v-if="$store.state.products != null" dense>
         <v-col v-for="(product, i) in $store.state.products" :key="i" cols="6" sm="3">
           <v-card flat elevation="1">
             <v-img
@@ -174,6 +175,14 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-row v-else>
+        <v-col v-for="i in 8" cols="6" sm="3" :key="i">
+          <v-skeleton-loader class="mx-auto" height="258" type="card">
+
+          </v-skeleton-loader>
+        </v-col>
+      </v-row>
+
     </v-container>
   </div>
 </template>
