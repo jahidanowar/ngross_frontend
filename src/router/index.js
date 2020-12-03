@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Shop from '../views/Shop.vue'
 import Category from '../views/Category.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,11 @@ const routes = [
     path: '/category',
     name: 'Category',
     component: Category
-  },
+  },{
+    path: '/login',
+    namme: 'Login',
+    component: Login
+  },  
   {
     path: '/about',
     name: 'About',

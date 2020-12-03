@@ -4,16 +4,34 @@
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title>N-Gross</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon><v-icon>mdi-account</v-icon></v-btn>
-      <v-btn><v-icon>mdi-basket</v-icon> <span class="ml-2">{{$store.state.cart}}</span></v-btn>
+      <v-btn icon to="login"><v-icon>mdi-account</v-icon></v-btn>
+      <v-btn
+        ><v-icon>mdi-basket</v-icon>
+        <span class="ml-2">{{ $store.state.cart }}</span></v-btn
+      >
     </v-app-bar>
 
     <!-- Navigation Lide for Mobile -->
-    <v-navigation-drawer v-model="drawer" fixed>
+    <v-navigation-drawer v-model="drawer" fixed temporary>
+      <!-- Profile Section -->
+      <template v-slot:prepend>
+        <v-list-item two-line>
+          <v-list-item-avatar>
+            <img src="https://randomuser.me/api/portraits/women/81.jpg" />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>Jane Smith</v-list-item-title>
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+      <!-- ./Profile Section -->
+
+      <v-divider></v-divider>
+
       <v-list nav dense>
-        <v-list-item-group
-          active-class="primary--text text--accent-4"
-        >
+        <v-list-item-group active-class="primary--text text--accent-4">
           <v-list-item v-for="(menu, i) in menus" :key="i" :to="menu.to">
             <v-list-item-icon>
               <v-icon>mdi-{{ menu.icon }}</v-icon>
@@ -21,7 +39,28 @@
             <v-list-item-title>{{ menu.label }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
+        <v-list-iitem-group> </v-list-iitem-group>
       </v-list>
+
+      <v-divider></v-divider>
+      <v-list nav dense>
+        <v-list-item-group class="primary--text text--accent-4">
+          <v-list-item to="/order">
+            <v-list-item-icon>
+              <v-icon>mdi-store</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>My Orders</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn block color="secondary">
+            Logout
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <!-- ./Navigation Lide for Mobile -->
@@ -55,5 +94,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
