@@ -19,16 +19,24 @@ export default new Vuex.Store({
       state.cart.total += parseInt(product.price);
 
       if (state.cart.cartItems.length > 0) {
-        state.cart.cartItems.find((o, i) => {
-          if (o.id === product.id) {
-            state.cart.cartItems[i].quantity++;
-          }else{
-            // state.cart.cartItems.push(product);
-            console.log("else called")
-          }
-        })
+
+        // state.cart.cartItems.map((o, i) => {
+        //   console.log(product.id)
+        //   if(o.id == product.id) {
+        //     console.log(o.id + "="+ product.id)
+        //     state.cart.cartItems[i].quantity++
+        //   }
+        // })
+
+        const cartItem = state.cart.cartItems.find(o=>o.id === product.id)
+        if(!cartItem){
+          state.cart.cartItems.push(product)
+        }else{
+          cartItem.quantity++
+        }
+
       } else {
-        state.cart.cartItems.push(product);
+        state.cart.cartItems.push(product)
       }
     },
     deleteCartItem(state, i) {
