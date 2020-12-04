@@ -1,6 +1,6 @@
 <template>
-  <div :class="{'my-auto':cartItems.length == 0 }">
-    <div v-if="cartItems.length != 0" class="cart mt-5">
+  <div :class="{'my-auto':cart.cartItems.length == 0 }">
+    <div v-if="cart.cartItems.length != 0" class="cart mt-5">
       <v-container>
         <div
           class="d-flex flex-no-wrap justify-space-between align-center mb-2"
@@ -12,7 +12,7 @@
         </div>
         <v-divider></v-divider>
         <v-row>
-          <v-col v-for="(cartItem, i) in cartItems" :key="i" cols="12" sm="6">
+          <v-col v-for="(cartItem, i) in cart.cartItems" :key="i" cols="12" sm="6">
             <v-card>
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div class="flex">
@@ -62,7 +62,7 @@
             style="width:100%"
           >
             <div>
-              <h2 class="secondary--text font-weight-bold">₹ 12233</h2>
+              <h2 class="secondary--text font-weight-bold">₹ {{cart.total}}</h2>
             </div>
             <v-btn color="primary" elevation="0">Place Order</v-btn>
           </div>
@@ -84,7 +84,7 @@ export default {
     return {};
   },
   computed: {
-    cartItems() {
+    cart() {
       return this.$store.state.cart;
     },
   },
