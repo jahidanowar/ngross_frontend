@@ -5,7 +5,7 @@
       <v-toolbar-title>N-Gross</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon to="login"><v-icon>mdi-account</v-icon></v-btn>
-      <v-btn
+      <v-btn to="/cart"
         ><v-icon>mdi-basket</v-icon>
         <span class="ml-2">{{ $store.state.cart }}</span></v-btn
       >
