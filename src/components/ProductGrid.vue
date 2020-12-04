@@ -1,7 +1,5 @@
 <template>
-  <v-container>
-    <h2 class="mb-2">Recent Products</h2>
-
+  <div class="product-grid">
     <v-row v-if="$store.state.products != null" dense>
       <v-col
         v-for="(product, i) in $store.state.products"
@@ -37,21 +35,20 @@
         </v-skeleton-loader>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "ProductGrid",
-  mounted(){
-      axios.get(this.$store.state.apiUrl + "product").then((reponse) => {
+  mounted() {
+    axios.get(this.$store.state.apiUrl + "product").then((reponse) => {
       this.$store.commit("setProducts", { products: reponse.data });
     });
-  }
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

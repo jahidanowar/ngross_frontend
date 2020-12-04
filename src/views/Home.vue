@@ -155,7 +155,13 @@
       <!-- ./Categories Section -->
     </v-container>
     <!-- ./Category Container -->
-    <product-grid/>
+    
+    <!-- Featured Product -->
+    <v-container>
+      <h2 class="mb-2">Featured Products</h2>
+      <product-grid/>
+    </v-container>
+    <!-- ./Featured Product -->
   </div>
 </template>
 
