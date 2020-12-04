@@ -20,7 +20,7 @@
                     {{cartItem.title}}
                   </v-card-title>
                   <v-card-subtitle>
-                    {{cartItem.prie}}
+                    ₹ {{parseInt(cartItem.price) * parseInt(cartItem.quantity)}}
                   </v-card-subtitle>
                   <v-card-actions>
                     <div
