@@ -7,7 +7,7 @@
       <v-btn icon to="login"><v-icon>mdi-account</v-icon></v-btn>
       <v-btn to="/cart"
         ><v-icon>mdi-basket</v-icon>
-        <span class="ml-2">{{ $store.state.cart }}</span></v-btn
+        <span class="ml-2">{{ $store.state.cart.length }}</span></v-btn
       >
     </v-app-bar>
 

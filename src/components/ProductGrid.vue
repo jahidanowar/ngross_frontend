@@ -23,7 +23,7 @@
             elevation="0"
             color="primary"
             class="mt-1"
-            @click="$store.commit('addToCart')"
+            @click="addToCart(i)"
             >Add to cart</v-btn
           >
         </v-card>
@@ -48,6 +48,14 @@ export default {
       this.$store.commit("setProducts", { products: reponse.data });
     });
   },
+  methods:{
+    addToCart(i){
+      // console.log(this.$store.state.products[i])
+      let product = this.$store.state.products[i]
+      product.quantity = 1
+      this.$store.commit("addToCart", product)
+    }
+  }
 };
 </script>
 

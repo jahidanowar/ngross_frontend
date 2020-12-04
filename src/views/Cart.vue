@@ -1,68 +1,77 @@
 <template>
-  <div class="cart mt-5">
-    <v-container>
-      <div class="d-flex flex-no-wrap justify-space-between align-center mb-2">
-        <h2>Cart</h2>
-        <div>
-          <v-btn color="primary" outlined>Place Order</v-btn>
-        </div>
-      </div>
-      <v-divider></v-divider>
-      <v-row>
-        <v-col v-for="i in 10" :key="i" cols="12" sm="6">
-          <v-card>
-            <div class="d-flex flex-no-wrap justify-space-between">
-              <div class="flex">
-                <v-card-title>
-                  Product Name
-                </v-card-title>
-                <v-card-subtitle>
-                  $123
-                </v-card-subtitle>
-                <v-card-actions>
-                  <div
-                    class="d-flex flex-no-wrap justify-space-between"
-                    style="width:100%"
-                  >
-                    <div class="flex flex-no-wrap justify-space-between">
-                      <v-btn flat icon color="primary">
-                        <v-icon>mdi-minus</v-icon>
-                      </v-btn>
-                      <v-btn flat icon color="primary">12</v-btn>
-                      <v-btn flat icon color="primary">
-                        <v-icon>mdi-plus</v-icon>
-                      </v-btn>
-                    </div>
-                    <v-spacer></v-spacer>
-                    <div class="text-right">
-                      <v-btn icon color="error"
-                        ><v-icon>mdi-delete</v-icon></v-btn
-                      >
-                    </div>
-                  </div>
-                </v-card-actions>
-              </div>
-              <v-avatar size="125" tile>
-                <v-img
-                  src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-                ></v-img>
-              </v-avatar>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-    <div class="bottom-bar">
+  <div :class="{'my-auto':cartItems.length == 0 }">
+    <div v-if="cartItems.length != 0" class="cart mt-5">
       <v-container>
         <div
-          class="d-flex flex-no-wrap justify-space-between align-center"
-          style="width:100%"
+          class="d-flex flex-no-wrap justify-space-between align-center mb-2"
         >
+          <h2>Cart</h2>
           <div>
-            <h2 class="secondary--text font-weight-bold">₹ 12233</h2>
+            <v-btn color="primary" outlined>Place Order</v-btn>
           </div>
-          <v-btn color="primary" elevation="0">Place Order</v-btn>
         </div>
+        <v-divider></v-divider>
+        <v-row>
+          <v-col v-for="(cartItem, i) in cartItems" :key="i" cols="12" sm="6">
+            <v-card>
+              <div class="d-flex flex-no-wrap justify-space-between">
+                <div class="flex">
+                  <v-card-title>
+                    {{cartItem.title}}
+                  </v-card-title>
+                  <v-card-subtitle>
+                    {{cartItem.prie}}
+                  </v-card-subtitle>
+                  <v-card-actions>
+                    <div
+                      class="d-flex flex-no-wrap justify-space-between"
+                      style="width:100%"
+                    >
+                      <div class="flex flex-no-wrap justify-space-between">
+                        <v-btn text icon color="primary">
+                          <v-icon>mdi-minus</v-icon>
+                        </v-btn>
+                        <v-btn text icon color="primary">{{cartItem.quantity}}</v-btn>
+                        <v-btn text icon color="primary">
+                          <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                      </div>
+                      <v-spacer></v-spacer>
+                      <div class="text-right">
+                        <v-btn icon color="error" @click="deleteCartItem(i)"
+                          ><v-icon>mdi-delete</v-icon></v-btn
+                        >
+                      </div>
+                    </div>
+                  </v-card-actions>
+                </div>
+                <v-avatar size="125" tile>
+                  <v-img
+                    :src="cartItem.image"
+                  ></v-img>
+                </v-avatar>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+      <div class="bottom-bar">
+        <v-container>
+          <div
+            class="d-flex flex-no-wrap justify-space-between align-center"
+            style="width:100%"
+          >
+            <div>
+              <h2 class="secondary--text font-weight-bold">₹ 12233</h2>
+            </div>
+            <v-btn color="primary" elevation="0">Place Order</v-btn>
+          </div>
+        </v-container>
+      </div>
+    </div>
+    <div v-else class="cart cart-empty my-auto">
+      <v-container class="text-center">
+        <h2 class="font-weight-bold">Empty Cart</h2>
       </v-container>
     </div>
   </div>
@@ -74,7 +83,17 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  computed: {
+    cartItems() {
+      return this.$store.state.cart;
+    },
+  },
+  methods: {
+    deleteCartItem(i){
+      console.log(i)
+      this.$store.commit("deleteCartItem", i)
+    }
+  },
 };
 </script>
 
