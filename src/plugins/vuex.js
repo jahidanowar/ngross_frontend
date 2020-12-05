@@ -25,7 +25,6 @@ export default new Vuex.Store({
         }else{
           cartItem.quantity++
         }
-
       } else {
         state.cart.cartItems.push(product)
       }
@@ -34,6 +33,9 @@ export default new Vuex.Store({
       state.cart.cartItems.splice(payload.index, 1);
       let total = parseInt(payload.quantity )* parseInt(payload.price)
       state.cart.total -= total
+    },
+    increaseCartItemQuantity(state, index){
+      state.cart.cartItems[index].quantity++
     },
     setCategories(state, payload) {
       state.categories = payload.categories;

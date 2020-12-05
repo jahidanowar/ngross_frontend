@@ -32,7 +32,7 @@
                           <v-icon>mdi-minus</v-icon>
                         </v-btn>
                         <v-btn text icon color="primary">{{cartItem.quantity}}</v-btn>
-                        <v-btn text icon color="primary">
+                        <v-btn text icon color="primary" @click="increaseCartItemQuantity(i)">
                           <v-icon>mdi-plus</v-icon>
                         </v-btn>
                       </div>
@@ -91,6 +91,9 @@ export default {
   methods: {
     deleteCartItem(cartItem, i){
       this.$store.commit("deleteCartItem", {index: i, price: cartItem.price, quantity:cartItem.quantity})
+    },
+    increaseCartItemQuantity(index){
+      this.$store.commit("increaseCartItemQuantity", index)
     }
   },
 };
