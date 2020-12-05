@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   name: "Login",
   data(){
@@ -41,7 +42,12 @@ export default {
   },
   methods:{
       login(){
-          console.log('Login Pressed')
+        console.log("Login Pressed:" + this.loginForm.username + " " + this.loginForm.password)
+
+        axios.post(this.$store.state.apiUrl+"login").then(response=>{
+          console.log(response.data)
+        })
+        
       }
   }
 };
