@@ -51,8 +51,9 @@ export default {
   methods:{
     addToCart(i){
       // console.log(this.$store.state.products[i])
-      let product = this.$store.state.products[i]
+      const product = this.$store.state.products[i]
       product.quantity = 1
+      // console.log(product)
       this.$store.commit("addToCart", product)
     }
   }
