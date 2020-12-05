@@ -11,7 +11,7 @@
           </div>
         </div>
         <v-divider></v-divider>
-        <v-row>
+        <v-row class="mb-12">
           <v-col v-for="(cartItem, i) in cart.cartItems" :key="i" cols="12" sm="6">
             <v-card>
               <div class="d-flex flex-no-wrap justify-space-between">
