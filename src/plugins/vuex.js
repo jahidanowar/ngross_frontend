@@ -19,15 +19,6 @@ export default new Vuex.Store({
       state.cart.total += parseInt(product.price);
 
       if (state.cart.cartItems.length > 0) {
-
-        // state.cart.cartItems.map((o, i) => {
-        //   console.log(product.id)
-        //   if(o.id == product.id) {
-        //     console.log(o.id + "="+ product.id)
-        //     state.cart.cartItems[i].quantity++
-        //   }
-        // })
-
         const cartItem = state.cart.cartItems.find(o=>o.id === product.id)
         if(!cartItem){
           state.cart.cartItems.push(product)
@@ -39,8 +30,10 @@ export default new Vuex.Store({
         state.cart.cartItems.push(product)
       }
     },
-    deleteCartItem(state, i) {
-      state.cart.cartItems.splice(i, 1);
+    deleteCartItem(state, payload) {
+      state.cart.cartItems.splice(payload.index, 1);
+      let total = parseInt(payload.quantity )* parseInt(payload.price)
+      state.cart.total -= total
     },
     setCategories(state, payload) {
       state.categories = payload.categories;

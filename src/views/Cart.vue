@@ -38,7 +38,7 @@
                       </div>
                       <v-spacer></v-spacer>
                       <div class="text-right">
-                        <v-btn icon color="error" @click="deleteCartItem(i)"
+                        <v-btn icon color="error" @click="deleteCartItem(cartItem, i)"
                           ><v-icon>mdi-delete</v-icon></v-btn
                         >
                       </div>
@@ -89,9 +89,8 @@ export default {
     },
   },
   methods: {
-    deleteCartItem(i){
-      console.log(i)
-      this.$store.commit("deleteCartItem", i)
+    deleteCartItem(cartItem, i){
+      this.$store.commit("deleteCartItem", {index: i, price: cartItem.price, quantity:cartItem.quantity})
     }
   },
 };
