@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    token: localStorage.getItem("user-token") || "",
+    user: {},
     apiUrl: "http://ngross.test/api/",
     cart: {
       cartItems: [],
@@ -19,23 +21,23 @@ export default new Vuex.Store({
       state.cart.total += parseInt(product.price);
 
       if (state.cart.cartItems.length > 0) {
-        const cartItem = state.cart.cartItems.find(o=>o.id === product.id)
-        if(!cartItem){
-          state.cart.cartItems.push(product)
-        }else{
-          cartItem.quantity++
+        const cartItem = state.cart.cartItems.find((o) => o.id === product.id);
+        if (!cartItem) {
+          state.cart.cartItems.push(product);
+        } else {
+          cartItem.quantity++;
         }
       } else {
-        state.cart.cartItems.push(product)
+        state.cart.cartItems.push(product);
       }
     },
     deleteCartItem(state, payload) {
       state.cart.cartItems.splice(payload.index, 1);
-      let total = parseInt(payload.quantity )* parseInt(payload.price)
-      state.cart.total -= total
+      let total = parseInt(payload.quantity) * parseInt(payload.price);
+      state.cart.total -= total;
     },
-    increaseCartItemQuantity(state, index){
-      state.cart.cartItems[index].quantity++
+    increaseCartItemQuantity(state, index) {
+      state.cart.cartItems[index].quantity++;
     },
     setCategories(state, payload) {
       state.categories = payload.categories;
