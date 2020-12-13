@@ -8,42 +8,105 @@ export default new Vuex.Store({
     token: localStorage.getItem("user-token") || "",
     user: {},
     apiUrl: "http://ngross.test/api/",
-    cart: {
-      cartItems: [],
-      total: 0,
-    },
+    cart: [],
+    // {id, quantity}
     categories: null,
     products: null,
   },
-  mutations: {
-    addToCart(state, product) {
-      // console.log(product)
-      state.cart.total += parseInt(product.price);
-
-      if (state.cart.cartItems.length > 0) {
-        const cartItem = state.cart.cartItems.find((o) => o.id === product.id);
-        if (!cartItem) {
-          state.cart.cartItems.push(product);
-        } else {
-          cartItem.quantity++;
+  getters: {
+    cartProducts(state) {
+      return state.cart.map(cartItem => {
+        const product = state.products.find(product => product.id === cartItem.id)
+        return {
+          id: cartItem.id,
+          title: product.title,
+          image: product.image,
+          price: product.price,
+          quantity: cartItem.quantity
         }
+      })
+    },
+    cartTotal(state, getters) {
+      let total = 0;
+      getters.cartProducts.forEach(product => {
+        total += parseInt(product.price) * product.quantity
+      });
+      return total;
+    },
+  },
+  actions: {
+    //Cart Actions
+    addProductToCart(context, product) {
+      const cartItem = context.state.cart.find(item => item.id === product.id)
+      if (!cartItem) {
+        //pushProductToCart
+        context.commit('pushProductToCart', product.id);
       } else {
-        state.cart.cartItems.push(product);
+        //increamentItemQuanity
+        context.commit('incrementItemQuantity', cartItem)
       }
     },
-    deleteCartItem(state, payload) {
-      state.cart.cartItems.splice(payload.index, 1);
-      let total = parseInt(payload.quantity) * parseInt(payload.price);
-      state.cart.total -= total;
+    incrementItemQuantity(context, productId) {
+      const cartItem = context.state.cart.find(item => item.id === productId)
+      if (cartItem) {
+        context.commit('incrementItemQuantity', cartItem)
+      }
     },
-    increaseCartItemQuantity(state, index) {
-      state.cart.cartItems[index].quantity++;
+    decrementItemQuantity({ state, commit }, productId) {
+      const cartItem = state.cart.find(item => item.id === productId)
+      if (cartItem) {
+        if (cartItem.quantity > 1) {
+          commit('decrementItemQuantity', cartItem)
+        }
+      }
     },
+    //Checkout Action
+    checkout({ commit }) {
+      commit('emptyCart');
+    }
+  },
+  mutations: {
+    //Page Mutations
     setCategories(state, payload) {
       state.categories = payload.categories;
     },
     setProducts(state, payload) {
       state.products = payload.products;
     },
+
+    //Cart Mutations
+    pushProductToCart(state, productId) {
+      state.cart.push({
+        id: productId,
+        quantity: 1
+      })
+    },
+    incrementItemQuantity(cartItem) {
+      cartItem.quantity++
+    },
+    decrementItemQuantity(cartItem) {
+      cartItem.quantity--
+    },
+    addToCart(state, product) {
+      // console.log(product)
+      if (state.cart.length > 0) {
+        const cartItem = state.cart.find((o) => o.id === product.id);
+        if (!cartItem) {
+          state.cart.push(product);
+        } else {
+          cartItem.quantity++;
+        }
+      } else {
+        state.cart.push(product);
+      }
+    },
+    deleteCartItem(state, payload) {
+      state.cart.splice(payload.index, 1);
+    },
+
+    //Checkout Mutations
+    emptyCart(state) {
+      state.cart = []
+    }
   },
 });

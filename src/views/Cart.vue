@@ -1,6 +1,6 @@
 <template>
-  <div :class="{'my-auto':cart.cartItems.length == 0 }">
-    <div v-if="cart.cartItems.length != 0" class="cart mt-5">
+  <div :class="{'my-auto':cart.length == 0 }">
+    <div v-if="cart.length != 0" class="cart mt-5">
       <v-container>
         <div
           class="d-flex flex-no-wrap justify-space-between align-center mb-2"
@@ -12,7 +12,7 @@
         </div>
         <v-divider></v-divider>
         <v-row class="mb-12">
-          <v-col v-for="(cartItem, i) in cart.cartItems" :key="i" cols="12" sm="6">
+          <v-col v-for="(cartItem, i) in cart" :key="i" cols="12" sm="6">
             <v-card>
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div class="flex">
@@ -20,7 +20,7 @@
                     {{cartItem.title}}
                   </v-card-title>
                   <v-card-subtitle>
-                    ₹ {{parseInt(cartItem.price) * parseInt(cartItem.quantity)}}
+                    ₹{{parseInt(cartItem.price) * parseInt(cartItem.quantity)}}
                   </v-card-subtitle>
                   <v-card-actions>
                     <div
@@ -28,11 +28,11 @@
                       style="width:100%"
                     >
                       <div class="flex flex-no-wrap justify-space-between">
-                        <v-btn text icon color="primary">
+                        <v-btn text icon color="primary" @click="decreaseCartItemQuantity(cartItem.id)">
                           <v-icon>mdi-minus</v-icon>
                         </v-btn>
                         <v-btn text icon color="primary">{{cartItem.quantity}}</v-btn>
-                        <v-btn text icon color="primary" @click="increaseCartItemQuantity(i)">
+                        <v-btn text icon color="primary" @click="increaseCartItemQuantity(cartItem.id)">
                           <v-icon>mdi-plus</v-icon>
                         </v-btn>
                       </div>
@@ -62,9 +62,9 @@
             style="width:100%"
           >
             <div>
-              <h2 class="secondary--text font-weight-bold">₹ {{cart.total}}</h2>
+              <h2 class="secondary--text font-weight-bold">₹{{total}}</h2>
             </div>
-            <v-btn color="primary" elevation="0">Place Order</v-btn>
+            <v-btn color="primary" elevation="0" @click="checkout">Place Order</v-btn>
           </div>
         </v-container>
       </div>
@@ -85,15 +85,24 @@ export default {
   },
   computed: {
     cart() {
-      return this.$store.state.cart;
+      return this.$store.getters.cartProducts
     },
+    total(){
+      return this.$store.getters.cartTotal
+    }
   },
   methods: {
     deleteCartItem(cartItem, i){
       this.$store.commit("deleteCartItem", {index: i, price: cartItem.price, quantity:cartItem.quantity})
     },
-    increaseCartItemQuantity(index){
-      this.$store.commit("increaseCartItemQuantity", index)
+    increaseCartItemQuantity(id){
+      this.$store.dispatch('incrementItemQuantity', id)
+    },
+    decreaseCartItemQuantity(id){
+      this.$store.dispatch('decrementItemQuantity', id)
+    },
+    checkout(){
+      this.$store.dispatch('checkout')
     }
   },
 };
