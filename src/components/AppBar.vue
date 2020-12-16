@@ -14,7 +14,7 @@
     <!-- Navigation Lide for Mobile -->
     <v-navigation-drawer v-model="drawer" fixed temporary>
       <!-- Profile Section -->
-      <template v-slot:prepend>
+      <template v-if="isAuthenticated" v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar>
             <img src="https://randomuser.me/api/portraits/women/81.jpg" />
@@ -54,7 +54,7 @@
       </v-list>
 
       <template v-slot:append>
-        <div class="pa-2">
+        <div v-if="isAuthenticated" class="pa-2">
           <v-btn block color="secondary" @click="logout">
             Logout
           </v-btn>
@@ -89,6 +89,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
   },
   methods: {
     async logout() {
