@@ -79,9 +79,11 @@ export default {
         .post(this.$store.state.apiUrl + "login", this.loginForm)
         .then((response) => {
           console.log(response.data);
-          const token = response.data;
+          const token = response.data["token"];
+          const user = response.data["user"];
           localStorage.setItem("user-token", token);
-          this.$store.commit("setUser", { token: token });
+          // Requesting user data
+          this.$store.commit("setUser", { token: token, user: user });
           this.$router.push("/");
         })
         .catch((error) => {
