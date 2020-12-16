@@ -81,6 +81,8 @@ export default {
           console.log(response.data);
           const token = response.data;
           localStorage.setItem("user-token", token);
+          this.$store.commit("setUser", { token: token });
+          this.$router.push("/");
         })
         .catch((error) => {
           localStorage.removeItem("user-token");

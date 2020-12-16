@@ -55,7 +55,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block color="secondary">
+          <v-btn block color="secondary" @click="logout">
             Logout
           </v-btn>
         </div>
@@ -89,6 +89,12 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("logOut");
+      this.$router.push("/login");
+    },
   },
 };
 </script>
