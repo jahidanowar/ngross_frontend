@@ -1,6 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "../router";
 
 Vue.use(Vuex);
 
@@ -84,6 +85,10 @@ export default new Vuex.Store({
         .then((response) => {
           console.log(response.data);
           commit("emptyCart");
+          router.push({
+            name: "Thankyou",
+            params: { orderId: response.data["order"]["order_number"] },
+          });
         })
         .catch((error) => {
           console.error(error);
