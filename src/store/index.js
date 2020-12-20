@@ -16,6 +16,9 @@ export default new Vuex.Store({
     products: null,
   },
   getters: {
+    getApiUrl: (state) => state.apiUrl,
+    getToken: (state) => state.token,
+    getUser: (state) => state.user,
     isAuthenticated: (state) => !!state.token,
     stateUser: (state) => state.user,
     cartProducts(state) {

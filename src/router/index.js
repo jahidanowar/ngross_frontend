@@ -6,7 +6,9 @@ import Category from "../views/Category.vue";
 import Login from "../views/Login.vue";
 import Cart from "../views/Cart.vue";
 import Thankyou from "../views/Thankyou.vue";
+import Order from "../views/Order.vue";
 import store from "../store";
+import axios from "axios";
 
 Vue.use(VueRouter);
 
@@ -47,6 +49,12 @@ const routes = [
     component: Thankyou,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/order",
+    name: "Order",
+    component: Order,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = new VueRouter({
@@ -58,7 +66,30 @@ const router = new VueRouter({
 // Checking If user is Authenticated
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    //Checking if user is authentiated
     if (store.getters.isAuthenticated) {
+      //Checking if user object is empty or not
+      if (Object.keys(store.getters.getUser).length === 0) {
+        //If empty getting the user data from api
+        axios
+          .get(store.getters.getApiUrl + "profile", {
+            headers: {
+              Authorization: `Bearer ${store.getters.getToken}`,
+            },
+          })
+          .then((response) => {
+              store.commit("setUser", {
+                token: store.getters.getToken,
+                user: response.data,
+              });
+          })
+          .catch((error) => {
+            //If error Loging out the user and redireting to login page
+            console.error(error);
+            store.dispatch("logOut");
+            next("/login");
+          });
+      }
       next();
       return;
     }
