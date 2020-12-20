@@ -1,3 +1,4 @@
+import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -67,8 +68,26 @@ export default new Vuex.Store({
       }
     },
     //Checkout Action
-    checkout({ commit }) {
-      commit("emptyCart");
+    checkout({ state, commit, getters }) {
+      const total = getters.cartTotal;
+      const cartItems = state.cart;
+      axios
+        .post(
+          state.apiUrl + "order",
+          { total, cartItems },
+          {
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          commit("emptyCart");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     //Account Actions
     async logOut({ commit }) {
