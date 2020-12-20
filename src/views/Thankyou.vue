@@ -1,0 +1,17 @@
+<template>
+  <div class="thankyou my-auto text-center">
+      <img src="../assets/shopping-cart.png" alt="Order Placed" lazy width="100px" style="display:block; margin:0 auto">
+      <h3 class="mt-5">Wohoo!<br/> Your Order has been Placed 🎉</h3>
+      <v-btn class="mt-5" color="primary" to="/order">View Orders</v-btn>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>

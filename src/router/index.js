@@ -5,6 +5,7 @@ import Shop from "../views/Shop.vue";
 import Category from "../views/Category.vue";
 import Login from "../views/Login.vue";
 import Cart from "../views/Cart.vue";
+import Thankyou from "../views/Thankyou.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -38,6 +39,12 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/thankyou",
+    name: "Order Placed",
+    component: Thankyou,
     meta: { requiresAuth: true },
   },
 ];
