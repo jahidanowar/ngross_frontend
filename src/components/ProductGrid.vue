@@ -35,6 +35,14 @@
         </v-skeleton-loader>
       </v-col>
     </v-row>
+    <v-snackbar v-model="showError">
+      {{ error.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="primary" text v-bind="attrs" @click="showError = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -43,20 +51,32 @@ import axios from "axios";
 
 export default {
   name: "ProductGrid",
+  data(){
+    return{
+      showError: false,
+      error:{}
+    }
+  },
   mounted() {
     axios.get(this.$store.state.apiUrl + "product").then((reponse) => {
       this.$store.commit("setProducts", { products: reponse.data });
     });
   },
-  methods:{
-    addToCart(i){
+  methods: {
+    addToCart(i) {
       // console.log(this.$store.state.products[i])
-      const product = this.$store.state.products[i]
-      product.quantity = 1
+      const product = this.$store.state.products[i];
+      product.quantity = 1;
       // console.log(product)
-      this.$store.dispatch('addProductToCart', product)
-    }
-  }
+      if (product["stock"] > 0) {
+        this.$store.dispatch("addProductToCart", product);
+      } else {
+        // console.error("Product is out of stock");
+        this.showError = true;
+        this.error.message = "Product is out of Stock";
+      }
+    },
+  },
 };
 </script>
 
