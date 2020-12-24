@@ -20,6 +20,7 @@ export default new Vuex.Store({
     getToken: (state) => state.token,
     getUser: (state) => state.user,
     isAuthenticated: (state) => !!state.token,
+    isVendor: (state) => state.user.user_type === "vendor" ? true : false,
     stateUser: (state) => state.user,
     cartProducts(state) {
       return state.cart.map((cartItem) => {

@@ -30,7 +30,7 @@
 
       <v-divider></v-divider>
 
-      <v-list nav dense>
+      <v-list v-if="!isVendor" nav dense>
         <v-list-item-group active-class="primary--text text--accent-4">
           <v-list-item v-for="(menu, i) in menus" :key="i" :to="menu.to">
             <v-list-item-icon>
@@ -42,13 +42,30 @@
       </v-list>
 
       <v-divider></v-divider>
-      <v-list nav dense>
+      <v-list v-if="!isVendor" nav dense>
         <v-list-item-group class="primary--text text--accent-4">
           <v-list-item to="/order">
             <v-list-item-icon>
               <v-icon>mdi-store</v-icon>
             </v-list-item-icon>
             <v-list-item-title>My Orders</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <v-list v-else nav dense>
+        <v-list-item-group class="primary--text text--accent-4">
+          <v-list-item to="/vendor/produt">
+            <v-list-item-icon>
+              <v-icon>mdi-store</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Products</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/vendor/order">
+            <v-list-item-icon>
+              <v-icon>mdi-shopping</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Orders</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -96,6 +113,9 @@ export default {
     },
     user() {
       return this.$store.getters.stateUser;
+    },
+    isVendor() {
+      return this.$store.getters.isVendor;
     },
   },
   methods: {
