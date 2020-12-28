@@ -7,6 +7,7 @@ import Login from "../views/Login.vue";
 import Cart from "../views/Cart.vue";
 import Thankyou from "../views/Thankyou.vue";
 import Order from "../views/Order.vue";
+import VendorProduct from "../views/vendor/Produts.vue";
 import store from "../store";
 import axios from "axios";
 
@@ -55,6 +56,12 @@ const routes = [
     component: Order,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/vendor/product",
+    name: "VendorProduct",
+    component: VendorProduct,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = new VueRouter({
@@ -78,10 +85,10 @@ router.beforeEach((to, from, next) => {
             },
           })
           .then((response) => {
-              store.commit("setUser", {
-                token: store.getters.getToken,
-                user: response.data,
-              });
+            store.commit("setUser", {
+              token: store.getters.getToken,
+              user: response.data,
+            });
           })
           .catch((error) => {
             //If error Loging out the user and redireting to login page

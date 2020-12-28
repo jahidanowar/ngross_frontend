@@ -55,7 +55,7 @@
 
       <v-list v-else nav dense>
         <v-list-item-group class="primary--text text--accent-4">
-          <v-list-item to="/vendor/produt">
+          <v-list-item to="/vendor/product">
             <v-list-item-icon>
               <v-icon>mdi-store</v-icon>
             </v-list-item-icon>

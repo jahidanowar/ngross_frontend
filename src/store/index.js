@@ -14,13 +14,14 @@ export default new Vuex.Store({
     // {id, quantity}
     categories: null,
     products: null,
+    vendorProduct: null,
   },
   getters: {
     getApiUrl: (state) => state.apiUrl,
     getToken: (state) => state.token,
     getUser: (state) => state.user,
     isAuthenticated: (state) => !!state.token,
-    isVendor: (state) => state.user.user_type === "vendor" ? true : false,
+    isVendor: (state) => (state.user.user_type === "vendor" ? true : false),
     stateUser: (state) => state.user,
     cartProducts(state) {
       return state.cart.map((cartItem) => {
@@ -43,6 +44,7 @@ export default new Vuex.Store({
       });
       return total;
     },
+    getVendorProduct: (state) => state.vendorProduct,
   },
   actions: {
     //Cart Actions
@@ -50,7 +52,7 @@ export default new Vuex.Store({
       const cartItem = context.state.cart.find(
         (item) => item.id === product.id
       );
-      if (!cartItem){
+      if (!cartItem) {
         //pushProductToCart
         context.commit("pushProductToCart", product.id);
       } else {
@@ -93,6 +95,22 @@ export default new Vuex.Store({
             name: "Thankyou",
             params: { orderId: response.data["order"]["order_number"] },
           });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    //Vendor Products
+    vendorProducts({ state, commit }) {
+      axios
+        .get(state.apiUrl + "vendor/product", {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          commit("setVendorProduct", response.data);
         })
         .catch((error) => {
           console.error(error);
@@ -155,6 +173,10 @@ export default new Vuex.Store({
     //Checkout Mutations
     emptyCart(state) {
       state.cart = [];
+    },
+
+    setVendorProduct(state, payload) {
+      state.vendorProduct = payload;
     },
   },
 });
