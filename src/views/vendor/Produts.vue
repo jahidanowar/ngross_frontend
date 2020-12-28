@@ -14,13 +14,13 @@
                 style="width:100%"
               >
                 <div class="flex flex-no-wrap justify-space-between">
-                  <v-btn text color="primary">Stock {{
-                    product.stock
-                  }}</v-btn>
+                  <v-btn text color="primary">Stock {{ product.stock }}</v-btn>
                 </div>
                 <v-spacer></v-spacer>
                 <div class="text-right">
-                  <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
+                  <v-btn icon @click="editProduct(product)"
+                    ><v-icon>mdi-pencil</v-icon></v-btn
+                  >
                 </div>
               </div>
             </v-card-actions>
@@ -30,18 +30,37 @@
           </v-avatar>
         </div>
       </v-card>
+      <edit-product-dialog
+        :product="selectedProduct"
+        :dialog="dialog"
+        v-on:close="dialog = false"
+      />
     </v-container>
   </div>
 </template>
 
 <script>
+import EditProductDialog from "../../components/EditPoductDialog";
 export default {
+  components: { EditProductDialog },
+  data() {
+    return {
+      dialog: false,
+      selectedProduct: {},
+    };
+  },
   mounted() {
     this.$store.dispatch("vendorProducts");
   },
   computed: {
     vendorProduct() {
       return this.$store.getters.getVendorProduct;
+    },
+  },
+  methods: {
+    editProduct(product) {
+      this.dialog = true;
+      this.selectedProduct = product;
     },
   },
 };
