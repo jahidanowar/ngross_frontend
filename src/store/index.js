@@ -15,6 +15,7 @@ export default new Vuex.Store({
     categories: null,
     products: null,
     vendorProduct: null,
+    vendorOrder: null,
   },
   getters: {
     getApiUrl: (state) => state.apiUrl,
@@ -45,6 +46,7 @@ export default new Vuex.Store({
       return total;
     },
     getVendorProduct: (state) => state.vendorProduct,
+    getVendorOrder: (state) => state.vendorOrder,
   },
   actions: {
     //Cart Actions
@@ -116,6 +118,22 @@ export default new Vuex.Store({
           console.error(error);
         });
     },
+    //Vendor Orders
+    vendorOrders({ state, commit }) {
+      axios
+        .get(state.apiUrl + "vendor/order", {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          commit("setVendorOrder", response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     //Account Actions
     async logOut({ commit }) {
       localStorage.removeItem("user-token");
@@ -177,6 +195,9 @@ export default new Vuex.Store({
 
     setVendorProduct(state, payload) {
       state.vendorProduct = payload;
+    },
+    setVendorOrder(state, payload) {
+      state.vendorOrder = payload;
     },
   },
 });

@@ -8,6 +8,7 @@ import Cart from "../views/Cart.vue";
 import Thankyou from "../views/Thankyou.vue";
 import Order from "../views/Order.vue";
 import VendorProduct from "../views/vendor/Produts.vue";
+import VendorOrder from "../views/vendor/Orders.vue";
 import store from "../store";
 import axios from "axios";
 
@@ -60,6 +61,12 @@ const routes = [
     path: "/vendor/product",
     name: "VendorProduct",
     component: VendorProduct,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/vendor/order",
+    name: "VendorOrder",
+    component: VendorOrder,
     meta: { requiresAuth: true },
   },
 ];
