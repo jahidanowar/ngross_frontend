@@ -1,7 +1,7 @@
 <template>
   <div class="vendor-orders mt-5">
     <v-container>
-      <h2 class="mb-2">Recent Orders</h2>
+      <h2 class="mb-2">Active Orders</h2>
       <v-card v-for="(order, i) in orders" :key="i" class="mb-3">
         <v-card-title primary-title>
           {{ order.product_name }}

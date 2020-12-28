@@ -51,15 +51,17 @@ export default new Vuex.Store({
   actions: {
     //Cart Actions
     addProductToCart(context, product) {
-      const cartItem = context.state.cart.find(
-        (item) => item.id === product.id
-      );
-      if (!cartItem) {
-        //pushProductToCart
-        context.commit("pushProductToCart", product.id);
-      } else {
-        //increamentItemQuanity
-        context.commit("incrementItemQuantity", cartItem);
+      if (product.quantity > 0) {
+        const cartItem = context.state.cart.find(
+          (item) => item.id === product.id
+        );
+        if (!cartItem) {
+          //pushProductToCart
+          context.commit("pushProductToCart", product.id);
+        } else {
+          //increamentItemQuanity
+          context.commit("incrementItemQuantity", cartItem);
+        }
       }
     },
     incrementItemQuantity(context, productId) {
@@ -164,6 +166,10 @@ export default new Vuex.Store({
         id: productId,
         quantity: 1,
       });
+      // const existingProduct = state.products.find(
+      //   (item) => item.id === product.id
+      // );
+      // existingProduct.quantity--;
     },
     incrementItemQuantity(state, cartItem) {
       cartItem.quantity++;
