@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "EditProduct",
   props: {
@@ -59,7 +60,26 @@ export default {
     },
     updateProduct() {
       console.log(this.product);
-      this.$emit("close");
+      let newProduct = {
+        id: this.product.id,
+        title: this.product.title,
+        price: this.product.price,
+        stock: this.product.stock,
+      };
+
+      axios
+        .patch(this.$store.getters.getApiUrl + "vendor/product", newProduct, {
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.getToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.$emit("close");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
 };
