@@ -137,9 +137,28 @@ export default new Vuex.Store({
         });
     },
     //Account Actions
-    async logOut({ commit }) {
-      localStorage.removeItem("user-token");
-      commit("logout");
+    logOut({ state, commit }) {
+      let token = state.token;
+      console.log(token);
+      axios
+        .post(state.apiUrl + "logout", {}, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          localStorage.removeItem("user-token");
+          commit("logout");
+          router.push("/login");
+
+        })
+        .catch((error) => {
+          console.error(error);
+          localStorage.removeItem("user-token");
+          commit("logout");
+          router.push("/login");
+        });
     },
   },
   mutations: {
