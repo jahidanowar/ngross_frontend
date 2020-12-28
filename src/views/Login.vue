@@ -84,7 +84,11 @@ export default {
           localStorage.setItem("user-token", token);
           // Requesting user data
           this.$store.commit("setUser", { token: token, user: user });
-          this.$router.push("/");
+          if (user.user_type === "vendor") {
+            this.$router.push("/vendor/order");
+          } else {
+            this.$router.push("/");
+          }
         })
         .catch((error) => {
           localStorage.removeItem("user-token");

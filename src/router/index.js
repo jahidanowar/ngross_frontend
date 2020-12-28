@@ -61,13 +61,13 @@ const routes = [
     path: "/vendor/product",
     name: "VendorProduct",
     component: VendorProduct,
-    meta: { requiresAuth: true, vendor: true },
+    meta: { vendor: true },
   },
   {
     path: "/vendor/order",
     name: "VendorOrder",
     component: VendorOrder,
-    meta: { requiresAuth: true, vendor: true },
+    meta: { vendor: true },
   },
 ];
 
@@ -125,15 +125,20 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-//Check if the Logedin user is vendor
+// Check if the Logedin user is vendor
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.vendor)) {
-    if (store.getters.getUser.user_type === "vendor") {
+    if (
+      store.getters.isAuthenticated &&
+      store.getters.getUser.user_type === "vendor"
+    ) {
       next();
       return;
     } else {
       next("/");
     }
+  } else {
+    next();
   }
 });
 
