@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem("user-token") || null,
     user: {},
-    apiUrl: "http://ngross.test/api/",
+    apiUrl: "http://ngross.test/api/" || process.env.API_URL,
     cart: [],
     // {id, quantity}
     categories: null,
