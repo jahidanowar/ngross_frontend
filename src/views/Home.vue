@@ -155,33 +155,29 @@
       <!-- ./Categories Section -->
     </v-container>
     <!-- ./Category Container -->
-    
+
     <!-- Featured Product -->
     <v-container>
       <h2 class="mb-2">Featured Products</h2>
-      <product-grid/>
+      <product-grid />
     </v-container>
     <!-- ./Featured Product -->
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import ProductGrid from "../components/ProductGrid"
+import ProductGrid from "../components/ProductGrid";
 
 export default {
   name: "Home",
   components: {
-    ProductGrid
+    ProductGrid,
   },
   data() {
-    return {}
+    return {};
   },
   mounted() {
-    axios.get(this.$store.state.apiUrl + "category").then((response) => {
-      console.log(response.data);
-      this.$store.commit("setCategories", { categories: response.data });
-    });
+    this.$store.dispatch("setCategories");
   },
 };
 </script>

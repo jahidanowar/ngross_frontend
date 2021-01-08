@@ -48,6 +48,7 @@ export default new Vuex.Store({
     },
     getVendorProduct: (state) => state.vendorProduct,
     getVendorOrder: (state) => state.vendorOrder,
+    getCategories: (state) => state.categories,
   },
   actions: {
     //Cart Actions
@@ -164,11 +165,17 @@ export default new Vuex.Store({
           router.push("/login");
         });
     },
+    //Fetch Categoris with Products
+    setCategories({state, commit}){
+      axios.get(state.apiUrl + "category").then((response) => {
+        commit("setCategories", { categories: response.data });
+      });
+    },
   },
   mutations: {
     //Chaning Loading State
-    changeLoadingState(state, payload){
-      state.loading = payload
+    changeLoadingState(state, payload) {
+      state.loading = payload;
     },
     //Page Mutations
     setCategories(state, payload) {
