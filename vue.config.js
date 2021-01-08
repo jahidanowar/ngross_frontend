@@ -4,8 +4,6 @@ module.exports = {
     name: "NGROSS",
     themeColor: "#00A86B",
     msTileColor: "#000000",
-    appleMobileWebAppCapable: "yes",
-    appleMobileWebAppStatusBarStyle: "black",
     manifestOptions: {
       icons: [
         {
