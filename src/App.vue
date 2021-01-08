@@ -15,5 +15,23 @@ export default {
   data: () => ({
     //
   }),
+  created(){
+    this.axios.interceptors.request.use((config) => {
+      console.log('loading');
+      this.$store.commit('changeLoadingState', true);
+      return config;
+    }, (error) => {
+      this.$store.commit('changeLoadingState', false);
+      return Promise.reject(error);
+    });
+
+    this.axios.interceptors.response.use((response) => {
+      this.$store.commit('changeLoadingState', false);
+      return response;
+    }, (error) => {
+      this.$store.commit('changeLoadingState', false);
+      return Promise.reject(error);
+    });
+  }
 };
 </script>

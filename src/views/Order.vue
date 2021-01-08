@@ -17,8 +17,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
@@ -26,7 +24,7 @@ export default {
     };
   },
   mounted() {
-    axios
+    this.axios
       .get(this.$store.getters.getApiUrl + "order", {
         headers: {
           Authorization: `Bearer ${this.$store.getters.getToken}`,

@@ -7,17 +7,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    loading: false,
     token: localStorage.getItem("user-token") || null,
     user: {},
-    apiUrl:  process.env.API_URL || "https://n-gross.com/api/",
+    apiUrl: process.env.API_URL || "https://n-gross.com/api/",
     cart: [],
-    // {id, quantity}
     categories: null,
     products: null,
     vendorProduct: null,
     vendorOrder: null,
   },
   getters: {
+    getLoadingState: (state) => state.loading,
     getApiUrl: (state) => state.apiUrl,
     getToken: (state) => state.token,
     getUser: (state) => state.user,
@@ -141,17 +142,20 @@ export default new Vuex.Store({
       let token = state.token;
       console.log(token);
       axios
-        .post(state.apiUrl + "logout", {}, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .post(
+          state.apiUrl + "logout",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((response) => {
           console.log(response.data);
           localStorage.removeItem("user-token");
           commit("logout");
           router.push("/login");
-
         })
         .catch((error) => {
           console.error(error);
@@ -162,6 +166,10 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    //Chaning Loading State
+    changeLoadingState(state, payload){
+      state.loading = payload
+    },
     //Page Mutations
     setCategories(state, payload) {
       state.categories = payload.categories;

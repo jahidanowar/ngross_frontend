@@ -3,6 +3,15 @@
     <v-app-bar color="primary" dark fixed>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title>N-Gross</v-toolbar-title>
+
+      <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        bottom
+        color="secondary accent-4"
+      ></v-progress-linear>
+
       <v-spacer></v-spacer>
       <v-btn icon to="login"><v-icon>mdi-account</v-icon></v-btn>
       <v-btn to="/cart"
@@ -107,7 +116,12 @@ export default {
       ],
     };
   },
+  watch: {
+  },
   computed: {
+    loading(){
+      return this.$store.getters.getLoadingState;
+    },
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
