@@ -13,7 +13,7 @@
       ></v-progress-linear>
 
       <v-spacer></v-spacer>
-      <v-btn icon to="login"><v-icon>mdi-account</v-icon></v-btn>
+      <v-btn v-if="!isAuthenticated" icon to="login"><v-icon>mdi-account</v-icon></v-btn>
       <v-btn to="/cart"
         ><v-icon>mdi-basket</v-icon>
         <span class="ml-2">{{ $store.state.cart.length }}</span></v-btn
