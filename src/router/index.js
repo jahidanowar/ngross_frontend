@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Shop from "../views/Shop.vue";
 import Category from "../views/Category.vue";
+import CategoryProducts from "../views/CategoryProducts.vue";
 import Login from "../views/Login.vue";
 import Cart from "../views/Cart.vue";
 import Thankyou from "../views/Thankyou.vue";
@@ -31,6 +32,12 @@ const routes = [
     path: "/category",
     name: "Category",
     component: Category,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/categorydetails/:id",
+    name: "CategoryProducts",
+    component: CategoryProducts,
     meta: { requiresAuth: true },
   },
   {

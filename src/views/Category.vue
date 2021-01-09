@@ -6,6 +6,7 @@
         <v-col v-for="(category, i) in categories" :key="i" cols="4" sm="2">
           <div
             class="category-blurb pa-1 rounded d-flex justify-center flex-column"
+            @click="gotoCategory(category)"
           >
             <div class="align-self-center icon">
               🍪
@@ -31,9 +32,17 @@ export default {
     },
   },
   mounted() {
-    if(this.$store.getters.getCategories === null){
-      this.$store.dispatch('setCategories');
+    if (this.$store.getters.getCategories === null) {
+      this.$store.dispatch("setCategories");
     }
+  },
+  methods: {
+    gotoCategory(category) {
+      this.$router.push({
+        name: "CategoryProducts",
+        params: { id: category.id },
+      });
+    },
   },
 };
 </script>

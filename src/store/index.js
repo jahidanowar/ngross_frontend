@@ -171,6 +171,9 @@ export default new Vuex.Store({
         commit("setCategories", { categories: response.data });
       });
     },
+    // getCategoryProducts({state}){
+
+    // }
   },
   mutations: {
     //Chaning Loading State
