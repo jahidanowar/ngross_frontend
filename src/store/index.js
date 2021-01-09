@@ -49,6 +49,10 @@ export default new Vuex.Store({
     getVendorProduct: (state) => state.vendorProduct,
     getVendorOrder: (state) => state.vendorOrder,
     getCategories: (state) => state.categories,
+    getCategory: (state, getters) => (id) => {
+      console.log(getters)
+      return state.categories.find((item) => item.id === id);
+    }
   },
   actions: {
     //Cart Actions
@@ -166,11 +170,17 @@ export default new Vuex.Store({
         });
     },
     //Fetch Categoris with Products
-    setCategories({state, commit}){
+    setCategories({ state, commit }) {
       axios.get(state.apiUrl + "category").then((response) => {
         commit("setCategories", { categories: response.data });
       });
     },
+    //Fetch Products and set tate
+    setProducts({ state, commit }) {
+      axios.get(state.apiUrl + "product").then((response) => {
+        commit("setProducts", { products: response.data });
+      });
+    }
     // getCategoryProducts({state}){
 
     // }

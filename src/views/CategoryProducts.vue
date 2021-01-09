@@ -37,12 +37,15 @@
 
 <script>
 export default {
-  data() {
-    return {
-      showError: false,
-      error: {},
-      category: null,
-    };
+  mounted() {
+    if (this.$store.getters.getCategories === null) {
+      this.$store.dispatch("setCategories");
+    }
+  },
+  computed: {
+    category() {
+      return this.$store.getters.getCategory(this.$route.params.id);
+    },
   },
   methods: {
     addToCart(i) {
@@ -58,19 +61,6 @@ export default {
         this.error.message = "Product is out of Stock";
       }
     },
-  },
-  created() {
-    const categories = this.$store.getters.getCategories;
-    if (!categories) {
-      this.$store.dispatch("setCategories");
-    }
-    const category = categories.find(
-      (item) => item.id === this.$route.params.id
-    );
-    console.log(category);
-    if (category) {
-      this.category = category;
-    }
   },
 };
 </script>

@@ -28,11 +28,14 @@ export default {
   },
   computed: {
     categories() {
+    console.log("Inside Computed");
       return this.$store.getters.getCategories;
     },
   },
   mounted() {
+    console.log("Inside Mounted");
     if (this.$store.getters.getCategories === null) {
+      this.$store.dispatch("setProducts");
       this.$store.dispatch("setCategories");
     }
   },
