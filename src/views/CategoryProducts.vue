@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <v-container>
+    <v-container v-if="category">
       <h2 class="mb-2">{{ category.title }}</h2>
       <v-row dense>
         <v-col
@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     addToCart(i) {
+        console.log(i);
       // console.log(this.$store.state.products[i])
       const product = this.$store.state.products[i];
       product.quantity = 1;
@@ -59,15 +60,22 @@ export default {
       }
     },
   },
-  created() {
-    const categories = this.$store.getters.getCategories;
-    if (!categories) {
-      this.$store.dispatch("setCategories");
+  async created() {
+    let category = null;
+    if (this.$store.getters.getCategories === null) {
+      this.axios
+        .get(this.$store.getters.getApiUrl + "category", {
+          id: this.$route.params.id,
+        })
+        .then((response) => {
+          this.category = response.data;
+        });
+    } else {
+      category = this.$store.getters.getCategories.find(
+        (item) => item.id === this.$route.params.id
+      );
     }
-    const category = categories.find(
-      (item) => item.id === this.$route.params.id
-    );
-    console.log(category);
+
     if (category) {
       this.category = category;
     }

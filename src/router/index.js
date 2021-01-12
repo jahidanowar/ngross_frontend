@@ -149,4 +149,11 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+//Preventing Vendor to access the home page
+router.beforeEach((to, from, next) => {
+  if (to.name === "Home" && store.getters.getUser.user_type === "vendor")
+    next({ name: "VendorOrder" });
+  else next();
+});
+
 export default router;

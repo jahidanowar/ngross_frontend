@@ -166,7 +166,7 @@ export default new Vuex.Store({
         });
     },
     //Fetch Categoris with Products
-    setCategories({state, commit}){
+    async setCategories({state, commit}){
       axios.get(state.apiUrl + "category").then((response) => {
         commit("setCategories", { categories: response.data });
       });
