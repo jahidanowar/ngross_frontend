@@ -170,13 +170,9 @@ export default new Vuex.Store({
         });
     },
     //Fetch Categoris with Products
-<<<<<<< HEAD
-    async setCategories({state, commit}){
-=======
     setCategories({ state, commit }) {
->>>>>>> 774d5a4f19e0e83dabcc6be844cca292e4ca8928
       axios.get(state.apiUrl + "category").then((response) => {
-        commit("setCategories", { categories: response.data });
+        commit("setCategories", response.data);
       });
     },
     //Fetch Products and set tate
@@ -196,7 +192,8 @@ export default new Vuex.Store({
     },
     //Page Mutations
     setCategories(state, payload) {
-      state.categories = payload.categories;
+      console.log("Mutation", payload)
+      state.categories = payload;
     },
     setProducts(state, payload) {
       state.products = payload.products;

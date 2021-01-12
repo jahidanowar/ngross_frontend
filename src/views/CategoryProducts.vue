@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  props: ['id'],
   mounted() {
     if (this.$store.getters.getCategories === null) {
       this.$store.dispatch("setCategories");
@@ -44,12 +45,12 @@ export default {
   },
   computed: {
     category() {
-      return this.$store.getters.getCategory(this.$route.params.id);
+      return this.$store.getters.getCategories.find(item=>item.id === this.id);
     },
   },
   methods: {
     addToCart(i) {
-        console.log(i);
+      console.log(i);
       // console.log(this.$store.state.products[i])
       const product = this.$store.state.products[i];
       product.quantity = 1;
@@ -63,29 +64,7 @@ export default {
       }
     },
   },
-<<<<<<< HEAD
-  async created() {
-    let category = null;
-    if (this.$store.getters.getCategories === null) {
-      this.axios
-        .get(this.$store.getters.getApiUrl + "category", {
-          id: this.$route.params.id,
-        })
-        .then((response) => {
-          this.category = response.data;
-        });
-    } else {
-      category = this.$store.getters.getCategories.find(
-        (item) => item.id === this.$route.params.id
-      );
-    }
 
-    if (category) {
-      this.category = category;
-    }
-  },
-=======
->>>>>>> 774d5a4f19e0e83dabcc6be844cca292e4ca8928
 };
 </script>
 

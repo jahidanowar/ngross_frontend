@@ -39,6 +39,7 @@ const routes = [
     name: "CategoryProducts",
     component: CategoryProducts,
     meta: { requiresAuth: true },
+    props: true
   },
   {
     path: "/login",
