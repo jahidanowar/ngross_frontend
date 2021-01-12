@@ -37,12 +37,15 @@
 
 <script>
 export default {
-  data() {
-    return {
-      showError: false,
-      error: {},
-      category: null,
-    };
+  mounted() {
+    if (this.$store.getters.getCategories === null) {
+      this.$store.dispatch("setCategories");
+    }
+  },
+  computed: {
+    category() {
+      return this.$store.getters.getCategory(this.$route.params.id);
+    },
   },
   methods: {
     addToCart(i) {
@@ -60,6 +63,7 @@ export default {
       }
     },
   },
+<<<<<<< HEAD
   async created() {
     let category = null;
     if (this.$store.getters.getCategories === null) {
@@ -80,6 +84,8 @@ export default {
       this.category = category;
     }
   },
+=======
+>>>>>>> 774d5a4f19e0e83dabcc6be844cca292e4ca8928
 };
 </script>
 
