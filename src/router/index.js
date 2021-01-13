@@ -139,6 +139,29 @@ router.beforeEach((to, from, next) => {
 // Check if the Logedin user is vendor
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.vendor)) {
+    if (Object.keys(store.getters.getUser).length === 0) {
+      //If empty getting the user data from api
+      axios
+        .get(store.getters.getApiUrl + "profile", {
+          headers: {
+            Authorization: `Bearer ${store.getters.getToken}`,
+          },
+        })
+        .then((response) => {
+          // console.log(response)
+          store.commit("setUser", {
+            token: store.getters.getToken,
+            userType: store.getters.getUserType,
+            user: response.data,
+          });
+        })
+        .catch((error) => {
+          //If error Loging out the user and redireting to login page
+          console.error(error);
+          store.dispatch("logOut");
+          next("/login");
+        });
+    }
     if (
       store.getters.isAuthenticated &&
       store.getters.getUser.user_type === "vendor"
