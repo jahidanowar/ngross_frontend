@@ -20,7 +20,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    meta: { homeGaurd: true },
+    meta: { requiresAuth: true },
   },
   {
     path: "/shop",
@@ -141,37 +141,36 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.vendor)) {
     if (
       store.getters.isAuthenticated &&
-      store.getters.getUserType === "vendor"
+      store.getters.getUser.user_type === "vendor"
     ) {
       next();
       return;
     } else {
-      next("/shop");
-      return;
+      next();
     }
   } else {
     next();
   }
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.homeGaurd)) {
-    if (
-      store.getters.isAuthenticated &&
-      store.getters.getUserType !== "vendor"
-    ) {
-      // console.log(store.getters.getUserType)
-      next();
-      return;
-    } else {
-      // next({path: '/vendor/order/'});
-      next('/vendor/order');
-      console.log(store.getters.getUserType)
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some((record) => record.meta.homeGaurd)) {
+//     if (
+//       store.getters.isAuthenticated &&
+//       store.getters.getUserType !== "vendor"
+//     ) {
+//       // console.log(store.getters.getUserType)
+//       next();
+//       return;
+//     } else {
+//       // next({path: '/vendor/order/'});
+//       next('/vendor/order');
+//       console.log(store.getters.getUserType)
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 //Preventing Vendor to access the home page
 // router.beforeEach((to, from, next) => {
