@@ -21,6 +21,7 @@
               <div class="mt-1">₹ {{ product.price }}</div>
             </div>
             <v-btn
+              :disabled = "product.stock <= 0"
               block
               elevation="0"
               color="primary"
