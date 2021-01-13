@@ -195,7 +195,7 @@ export default new Vuex.Store({
     },
     //Page Mutations
     setCategories(state, payload) {
-      console.log("Mutation", payload);
+      // console.log("Mutation", payload);
       state.categories = payload;
     },
     setProducts(state, payload) {
@@ -206,7 +206,7 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.token = payload.token;
       state.user = payload.user;
-      state.userType = payload.userType;
+      state.userType = payload.user.user_type;
     },
     logout(state) {
       state.token = null;

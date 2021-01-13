@@ -177,7 +177,9 @@ export default {
     return {};
   },
   mounted() {
+    console.log(this.$store.getters.getUserType)
     if(this.$store.getters.getUserType === 'vendor'){
+      
       this.$router.push('/vendor/order')
     }
     this.$store.dispatch("setCategories");
