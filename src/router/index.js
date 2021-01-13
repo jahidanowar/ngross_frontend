@@ -20,7 +20,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    meta: { requiresAuth: true },
+    meta: { homeGaurd: true },
   },
   {
     path: "/shop",
@@ -39,7 +39,7 @@ const routes = [
     name: "CategoryProducts",
     component: CategoryProducts,
     meta: { requiresAuth: true },
-    props: true
+    props: true,
   },
   {
     path: "/login",
@@ -90,6 +90,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     //Checking if user is authentiated
     if (store.getters.isAuthenticated) {
+      // console.log();
       //Checking if user object is empty or not
       if (Object.keys(store.getters.getUser).length === 0) {
         //If empty getting the user data from api
@@ -100,8 +101,10 @@ router.beforeEach((to, from, next) => {
             },
           })
           .then((response) => {
+            // console.log(response)
             store.commit("setUser", {
               token: store.getters.getToken,
+              userType: store.getters.getUserType,
               user: response.data,
             });
           })
@@ -138,12 +141,32 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.vendor)) {
     if (
       store.getters.isAuthenticated &&
-      store.getters.getUser.user_type === "vendor"
+      store.getters.getUserType === "vendor"
     ) {
       next();
       return;
     } else {
-      next("/");
+      next("/shop");
+      return;
+    }
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.homeGaurd)) {
+    if (
+      store.getters.isAuthenticated &&
+      store.getters.getUserType !== "vendor"
+    ) {
+      // console.log(store.getters.getUserType)
+      next();
+      return;
+    } else {
+      // next({path: '/vendor/order/'});
+      next('/vendor/order');
+      console.log(store.getters.getUserType)
     }
   } else {
     next();
@@ -151,10 +174,10 @@ router.beforeEach((to, from, next) => {
 });
 
 //Preventing Vendor to access the home page
-router.beforeEach((to, from, next) => {
-  if (to.name === "Home" && store.getters.getUser.user_type === "vendor")
-    next({ name: "VendorOrder" });
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.name === "Home" && store.getters.getUser.user_type === "vendor")
+//     next("/vendor/order");
+//   else next();
+// });
 
 export default router;

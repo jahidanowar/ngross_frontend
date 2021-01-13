@@ -16,6 +16,7 @@
 
 <script>
 export default {
+  name: 'VendorOrder',
   mounted() {
     this.$store.dispatch("vendorOrders");
   },

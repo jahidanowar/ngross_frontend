@@ -10,6 +10,7 @@ export default new Vuex.Store({
     loading: false,
     token: localStorage.getItem("user-token") || null,
     user: {},
+    userType: localStorage.getItem("user-type") || null,
     apiUrl: process.env.API_URL || "https://n-gross.com/api/",
     cart: [],
     categories: null,
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     getApiUrl: (state) => state.apiUrl,
     getToken: (state) => state.token,
     getUser: (state) => state.user,
+    getUserType: (state) => state.userType,
     isAuthenticated: (state) => !!state.token,
     isVendor: (state) => (state.user.user_type === "vendor" ? true : false),
     stateUser: (state) => state.user,
@@ -50,9 +52,9 @@ export default new Vuex.Store({
     getVendorOrder: (state) => state.vendorOrder,
     getCategories: (state) => state.categories,
     getCategory: (state, getters) => (id) => {
-      console.log(getters)
+      console.log(getters);
       return state.categories.find((item) => item.id === id);
-    }
+    },
   },
   actions: {
     //Cart Actions
@@ -145,7 +147,6 @@ export default new Vuex.Store({
     //Account Actions
     logOut({ state, commit }) {
       let token = state.token;
-      console.log(token);
       axios
         .post(
           state.apiUrl + "logout",
@@ -159,12 +160,14 @@ export default new Vuex.Store({
         .then((response) => {
           console.log(response.data);
           localStorage.removeItem("user-token");
+          localStorage.removeItem("user-type");
           commit("logout");
           router.push("/login");
         })
         .catch((error) => {
           console.error(error);
           localStorage.removeItem("user-token");
+          localStorage.removeItem("user-type");
           commit("logout");
           router.push("/login");
         });
@@ -180,7 +183,7 @@ export default new Vuex.Store({
       axios.get(state.apiUrl + "product").then((response) => {
         commit("setProducts", { products: response.data });
       });
-    }
+    },
     // getCategoryProducts({state}){
 
     // }
@@ -192,7 +195,7 @@ export default new Vuex.Store({
     },
     //Page Mutations
     setCategories(state, payload) {
-      console.log("Mutation", payload)
+      console.log("Mutation", payload);
       state.categories = payload;
     },
     setProducts(state, payload) {
@@ -203,9 +206,12 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.token = payload.token;
       state.user = payload.user;
+      state.userType = payload.userType;
     },
     logout(state) {
-      (state.token = null), (state.user = {});
+      state.token = null;
+      state.user = {};
+      state.userType = null;
     },
 
     //Cart Mutations

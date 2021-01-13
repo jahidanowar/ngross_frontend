@@ -82,6 +82,7 @@ export default {
           const token = response.data["token"];
           const user = response.data["user"];
           localStorage.setItem("user-token", token);
+          localStorage.setItem("user-type", user.user_type);
           // Requesting user data
           this.$store.commit("setUser", { token: token, user: user });
           if (user.user_type === "vendor") {
