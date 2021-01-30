@@ -4,14 +4,13 @@ import Vuex from "vuex";
 import router from "../router";
 
 Vue.use(Vuex);
-
 export default new Vuex.Store({
   state: {
     loading: false,
     token: localStorage.getItem("user-token") || null,
     user: {},
     userType: localStorage.getItem("user-type") || null,
-    apiUrl: process.env.API_URL || "https://n-gross.com/api/",
+    apiUrl: process.env.VUE_APP_API_URL,
     cart: [],
     categories: null,
     products: null,
@@ -143,6 +142,20 @@ export default new Vuex.Store({
         .catch((error) => {
           console.error(error);
         });
+    },
+    //Filter Vendor Order
+    async filterVendorOrders({state, commit}, payload){
+      await axios.get(state.apiUrl + "vendor/order?byhour="+payload,{
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+        },
+      })
+      .then((response)=>{
+        commit("setVendorOrder", response.data);
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
     },
     //Account Actions
     logOut({ state, commit }) {
