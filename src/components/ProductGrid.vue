@@ -65,7 +65,7 @@ export default {
   methods: {
     addToCart(i) {
       // console.log(this.$store.state.products[i])
-      const product = this.$store.state.products[i];
+      const product = this.$store.state.products.find(item=>item.id === i);
       product.quantity = 1;
       // console.log(product)
       if (product["stock"] > 0) {
