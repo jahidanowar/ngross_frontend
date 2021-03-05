@@ -12,8 +12,9 @@ import './registerServiceWorker'
 Vue.config.productionTip = false
 
 // window.axios = require('axios');
-Vue.use(VueAxios, axios);
 
+Vue.use(VueAxios, axios);
+// axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 new Vue({
   router,
   vuetify,

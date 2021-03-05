@@ -2,6 +2,7 @@ import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
+import SearchModule from './search'
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -273,4 +274,7 @@ export default new Vuex.Store({
       state.vendorOrder = payload;
     },
   },
+  modules:{
+    search: SearchModule
+  }
 });

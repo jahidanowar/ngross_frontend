@@ -10,6 +10,7 @@ import Thankyou from "../views/Thankyou.vue";
 import Order from "../views/Order.vue";
 import VendorProduct from "../views/vendor/Produts.vue";
 import VendorOrder from "../views/vendor/Orders.vue";
+import Search from "../views/Search.vue";
 import store from "../store";
 import axios from "axios";
 
@@ -64,6 +65,12 @@ const routes = [
     name: "Order",
     component: Order,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search,
+    meta: {requiresAuth: true},
   },
   {
     path: "/vendor/product",
