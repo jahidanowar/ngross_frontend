@@ -23,7 +23,7 @@
             elevation="0"
             color="primary"
             class="mt-1"
-            @click="addToCart(i)"
+            @click="addToCart(product.id)"
             >Add to cart</v-btn
           >
         </v-card>
@@ -68,7 +68,7 @@ export default {
   methods: {
     addToCart(i) {
       // console.log(this.$store.state.products[i])
-      const product = this.$store.state.products[i];
+      const product = this.$store.state.products.find(item=>item.id === i);
       product.quantity = 1;
       // console.log(product)
       if (product["stock"] > 0) {
