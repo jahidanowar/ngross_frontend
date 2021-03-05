@@ -14,8 +14,8 @@
 
       <v-spacer></v-spacer>
       <v-btn v-if="!isAuthenticated" icon to="login"><v-icon>mdi-account</v-icon></v-btn>
-      <v-btn icon to="search"><v-icon>mdi-magnify</v-icon></v-btn>
-      <v-btn to="/cart"
+      <v-btn v-if="isAuthenticated" icon to="search"><v-icon>mdi-magnify</v-icon></v-btn>
+      <v-btn v-if="isAuthenticated" to="/cart"
         ><v-icon>mdi-basket</v-icon>
         <span class="ml-2">{{ $store.state.cart.length }}</span></v-btn
       >
