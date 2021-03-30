@@ -70,7 +70,7 @@ const routes = [
     path: "/search",
     name: "Search",
     component: Search,
-    meta: {requiresAuth: true},
+    meta: { requiresAuth: true },
   },
   {
     path: "/vendor/product",
@@ -182,6 +182,18 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+
+// router.beforeEach((to, from, next) => {
+//   const context = {
+//     to,
+//     from,
+//     next,
+//     store
+//   }
+//   to.meta.middleware[0]({...context, next: middlewarePipeline()})
+// })
+
 
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some((record) => record.meta.homeGaurd)) {
